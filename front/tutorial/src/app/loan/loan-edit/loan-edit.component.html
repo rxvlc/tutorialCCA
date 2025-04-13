@@ -1,0 +1,51 @@
+<div class="container">
+    <h1>Préstamo</h1>
+
+    <form>
+        <mat-form-field>
+            <mat-label>Indentificador</mat-label>
+            <input type="text" matInput placeholder="Identificador" [(ngModel)]="loan.id" name="id" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre cliente...</mat-label>
+            <mat-select disableRipple [(ngModel)]="loan.client" name="client" required>
+                <mat-option *ngFor="let client of clients" [value]="client">{{ client.name }}</mat-option>
+            </mat-select>
+            <mat-error>El cliente no puede estar vacío</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre juego...</mat-label>
+            <mat-select disableRipple [(ngModel)]="loan.game" name="game" required>
+                <mat-option *ngFor="let game of games" [value]="game">{{ game.title }}</mat-option>
+            </mat-select>
+            <mat-error>El juego no puede estar vacío</mat-error>
+        </mat-form-field>
+
+        <div class="datePicker">
+            <mat-form-field>
+                <mat-label>Fecha de inicio</mat-label>
+                <input matInput [matDatepicker]="startPicker" name="beginDate" [(ngModel)]="loan.beginDate" required>
+                <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Fecha de fin</mat-label>
+                <input matInput [matDatepicker]="endPicker" name="endDate" [(ngModel)]="loan.endDate" required>
+                <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="error-message">
+            <mat-error *ngIf="error">{{errorMessage}}</mat-error>
+        </div>
+    </form>
+
+    <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+    </div>
+</div>

@@ -28,4 +28,12 @@ public interface GameService {
      */
     void save(Long id, GameDto dto);
 
+    /**
+     * Metodo para obtener un Game
+     *
+     * @param id
+     * @return
+     */
+    Game get(Long id);
+
 }
