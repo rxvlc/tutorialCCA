@@ -14,6 +14,7 @@ import { ClientService } from '../../client/client.service';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-loan-edit',
@@ -52,7 +53,8 @@ export class LoanEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private loanService: LoanService,
     private gameService: GameService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -83,6 +85,7 @@ export class LoanEditComponent implements OnInit {
   onSave() {
     this.loanService.saveLoan(this.loan).subscribe({
       next: (result) => {
+        this.toastr.success('Prestamo guardado exitósamente');
         this.dialogRef.close();
       },
       error: (error) => {

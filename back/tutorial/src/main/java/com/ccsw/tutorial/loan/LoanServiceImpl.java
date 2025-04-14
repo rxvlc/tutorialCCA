@@ -40,13 +40,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public void save(Long id, LoanDto data) throws Exception {
+    public void save(LoanDto data) throws Exception {
         Loan loan;
         loan = new Loan();
 
         loan.setClient(this.clientService.get(data.getClient().getId()));
         loan.setGame(this.gameService.get(data.getGame().getId()));
-
         checkValidDates(data.getBeginDate(), data.getEndDate()); //check fechas validas
         checkGamesRent(loan.getClient().getId(), data.getBeginDate(), data.getEndDate()); //check el juego no esta alquilado por otro cliente
         checkGameBorrowed(loan.getGame().getId(), data.getBeginDate(), data.getEndDate());//check el cliente no tiene mas de 2 juegos alquilados

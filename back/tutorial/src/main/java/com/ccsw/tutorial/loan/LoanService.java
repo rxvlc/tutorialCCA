@@ -21,10 +21,9 @@ public interface LoanService {
     /**
      * Método para crear o actualizar un {@link Loan}
      *
-     * @param id PK de la entidad
      * @param dto datos de la entidad
      */
-    void save(Long id, LoanDto dto) throws Exception;
+    void save(LoanDto dto) throws Exception;
 
     /**
      * Método para crear o actualizar un {@link Loan}

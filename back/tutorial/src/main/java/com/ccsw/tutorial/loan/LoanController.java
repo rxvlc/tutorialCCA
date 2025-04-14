@@ -10,9 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Tag(name = "Loan", description = "API of Loan")
@@ -43,15 +48,23 @@ public class LoanController {
     }
 
     /**
-     * Método para crear o actualizar un {@link Loan}
+     * Método para crear un {@link Loan}
      *
      * @param id PK de la entidad
      * @param dto datos de la entidad
      */
-    @Operation(summary = "Save or Update", description = "Method that saves or updates a Loan")
-    @RequestMapping(path = { "", "/{id}" }, method = RequestMethod.PUT)
-    public void save(@PathVariable(name = "id", required = false) Long id, @RequestBody LoanDto dto) throws Exception {
-        this.loanService.save(id, dto);
+    @Operation(summary = "Save", description = "Method that saves a Loan")
+    @RequestMapping(path = "", method = RequestMethod.PUT)
+    public ResponseEntity<Map<String, String>> save(@RequestBody LoanDto dto) {
+        try {
+            this.loanService.save(dto);
+            return ResponseEntity.ok(Collections.singletonMap("message", "Loan saved successfully"));
+        } catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+
+        }
     }
 
     /**
