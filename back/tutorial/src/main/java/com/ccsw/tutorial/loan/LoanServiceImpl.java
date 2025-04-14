@@ -33,7 +33,6 @@ public class LoanServiceImpl implements LoanService {
         LoanSpecification clientSpec = new LoanSpecification(new SearchCriteria("client.id", ":", clientId));
         LoanSpecification beginDateSpec = new LoanSpecification(new SearchCriteria("beginDate", "<=", filteredDate));
         LoanSpecification endDateSpec = new LoanSpecification(new SearchCriteria("endDate", ">=", filteredDate));
-
         Specification<Loan> spec = Specification.where(gameSpec).and(clientSpec).and(beginDateSpec).and(endDateSpec);
 
         return this.loanRepository.findAll(spec, dto.getPageable().getPageable());
@@ -78,9 +77,9 @@ public class LoanServiceImpl implements LoanService {
 
     }
 
-    public void checkGameBorrowed(Long gameId, LocalDate fechaIni, LocalDate fechaFin) throws Exception {
-        Specification<Loan> clientLoansOnDate = new LoanSpecification(new SearchCriteria("game.id", ":", gameId)).and(new LoanSpecification(new SearchCriteria("beginDate", "<=", fechaFin)))
-                .and(new LoanSpecification(new SearchCriteria("endDate", ">=", fechaIni)));
+    public void checkGameBorrowed(Long gameId, LocalDate beginDate, LocalDate endDate) throws Exception {
+        Specification<Loan> clientLoansOnDate = new LoanSpecification(new SearchCriteria("game.id", ":", gameId)).and(new LoanSpecification(new SearchCriteria("beginDate", "<=", endDate)))
+                .and(new LoanSpecification(new SearchCriteria("endDate", ">=", beginDate)));
 
         long isLended = this.loanRepository.count(clientLoansOnDate);
 
