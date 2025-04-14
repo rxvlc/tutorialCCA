@@ -15,6 +15,6 @@ public interface LoanRepository extends CrudRepository<Loan, Long>, JpaSpecifica
      * @param pageable pageable
      * @return {@link Page} de {@link Loan}
      */
-    Page<Loan> findAll(Specification<Loan> sprec, Pageable pageable);
+    Page<Loan> findAll(Specification<Loan> spec, Pageable pageable);
 
 }
